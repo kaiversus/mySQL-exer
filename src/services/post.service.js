@@ -1,6 +1,9 @@
 const postModel = require('../models/post.model');
-async function getAllPosts() {
-    return await postModel.findAllPosts();
+async function getAllPosts(query) {
+    const page = parseInt(query.page) || 1;
+    const limit = parseInt(query.limit) || 10;
+    const offset = (page - 1) * limit;
+    return await postModel.findAllPosts({ type: query.type, tag: query.tag }, limit, offset);
 }
 async function getPostById(id) {
     const post = await postModel.findPostById(id);

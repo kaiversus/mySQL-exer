@@ -1,7 +1,7 @@
 const postService = require('../services/post.service');
 async function getAllPosts(req, res, next) {
     try {
-        const posts = await postService.getAllPosts();
+        const posts = await postService.getAllPosts(req.query);
         res.status(200).json(posts);
     }catch (error) {
         next(error);
