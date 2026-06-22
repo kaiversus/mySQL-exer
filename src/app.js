@@ -10,6 +10,7 @@ app.get('/', (req, res) => {
 app.use('/api/posts', require('./routes/post.routes'));
 app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/tags', require('./routes/tag.routes'));
+app.use('/api/subscribers', require('./routes/subscriber.routes'));
 app.use(require('./middlewares/errorHandler'));
 
 module.exports = app;

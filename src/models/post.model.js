@@ -15,7 +15,7 @@ async function createPost(post){
     const [result] = await pool.query(
         'INSERT INTO posts (admin_id, type, heading, description, body, image, date) VALUES (?, ?, ?, ?, ?, ?, NOW())',
         [admin_id, type, heading, description, body, image]
-);
+    );
     return result.insertId;
 }
 
