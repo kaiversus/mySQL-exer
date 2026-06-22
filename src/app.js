@@ -1,4 +1,12 @@
-const express = require('express');
+import express from 'express';
+import postRoutes from './routes/post.routes.js';
+import authRoutes from './routes/auth.routes.js';
+import tagRoutes from './routes/tag.routes.js';
+import subscriberRoutes from './routes/subscriber.routes.js';
+import profileRoutes from './routes/profile.routes.js';
+import adminRoutes from './routes/admin.routes.js';
+import errorHandler from './middlewares/errorHandler.js';
+
 const app = express();
 
 app.use(express.json());
@@ -7,12 +15,12 @@ app.get('/', (req, res) => {
     res.json({ message: 'Welcome to the Blog API!' });
 });
 
-app.use('/api/posts', require('./routes/post.routes'));
-app.use('/api/auth', require('./routes/auth.routes'));
-app.use('/api/tags', require('./routes/tag.routes'));
-app.use('/api/subscribers', require('./routes/subscriber.routes'));
-app.use('/api/profile', require('./routes/profile.routes'));
-app.use('/api/admins', require('./routes/admin.routes'));
-app.use(require('./middlewares/errorHandler'));
+app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/tags', tagRoutes);
+app.use('/api/subscribers', subscriberRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/admins', adminRoutes);
+app.use(errorHandler);
 
-module.exports = app;
+export default app;

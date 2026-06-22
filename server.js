@@ -1,10 +1,10 @@
-require('dotenv').config();
-const app = require('./src/app');
-const pool = require('./src/config/db');
+import 'dotenv/config';
+import app from './src/app.js';
+import pool from './src/config/db.js';
 
 const PORT = process.env.PORT || 3000;
 
-async function startServer() {
+const startServer = async () => {
     try {
         const conn = await pool.getConnection();
         console.log('Connected to the database');
@@ -16,7 +16,6 @@ async function startServer() {
         console.error('Unable to connect to the database:', error);
         process.exit(1);
     }
-}
-
+};
 
 startServer();

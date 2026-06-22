@@ -1,62 +1,60 @@
-const adminModel = require('../models/admin.model');
-const bcrypt = require('bcryptjs');
+import * as adminModel from '../models/admin.model.js';
+import bcrypt from 'bcryptjs';
 
-async function getMe(adminId){
+export const getMe = async (adminId) => {
     const me = await adminModel.findAdminById(adminId);
-    if(!me){
+    if (!me) {
         const error = new Error('USER NOT FOUND');
         error.statusCode = 404;
         throw error;
     }
     return { id: me.id, username: me.username, email: me.email };
-}
+};
 
-async function updateMe(adminId, data){
-    const {username, email} = data;
-    if(!username || username.trim() === ''){
+export const updateMe = async (adminId, data) => {
+    const { username, email } = data;
+    if (!username || username.trim() === '') {
         const error = new Error('Username is required');
         error.statusCode = 400;
         throw error;
     }
-    if(!email || email.trim() === ''){
+    if (!email || email.trim() === '') {
         const error = new Error('Email is required');
         error.statusCode = 400;
-        throw error;       
+        throw error;
     }
-    const updated = await adminModel.updateAdmin(adminId, {username, email})
-    if(!updated){
-        const error = new Error('ADMIN NOT FOUND'); 
+    const updated = await adminModel.updateAdmin(adminId, { username, email });
+    if (!updated) {
+        const error = new Error('ADMIN NOT FOUND');
         error.statusCode = 404;
-        throw error;       
+        throw error;
     }
     const me = await adminModel.findAdminById(adminId);
     return { id: me.id, username: me.username, email: me.email };
-}
+};
 
-async function changePassword(adminId, currentPassword, newPassword){
+export const changePassword = async (adminId, currentPassword, newPassword) => {
     const admin = await adminModel.findAdminById(adminId);
-    if(!admin){
-        const error = new Error('ADMIN NOT FOUND'); 
+    if (!admin) {
+        const error = new Error('ADMIN NOT FOUND');
         error.statusCode = 404;
-        throw error; 
+        throw error;
     }
 
     const isMatch = await bcrypt.compare(currentPassword, admin.password);
-    if(!isMatch){
-        const error = new Error('Current password is incorrect'); 
+    if (!isMatch) {
+        const error = new Error('Current password is incorrect');
         error.statusCode = 401;
-        throw error; 
+        throw error;
     }
-    if(!newPassword || newPassword.length < 6){
-        const error = new Error('New password must be at least 6 characters'); 
+    if (!newPassword || newPassword.length < 6) {
+        const error = new Error('New password must be at least 6 characters');
         error.statusCode = 400;
-        throw error; 
+        throw error;
     }
 
     const hashed = await bcrypt.hash(newPassword, 10);
 
     await adminModel.updatePassword(adminId, hashed);
-    return {message: 'Password updated successfully'}
-}
-
-module.exports = {getMe, updateMe, changePassword}
+    return { message: 'Password updated successfully' };
+};

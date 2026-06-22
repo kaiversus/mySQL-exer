@@ -1,39 +1,37 @@
-const tagService = require('../services/tag.service');
+import * as tagService from '../services/tag.service.js';
 
-async function getAllTags(req, res, next){
-    try{
+export const getAllTags = async (req, res, next) => {
+    try {
         const tags = await tagService.getAllTags();
         res.status(200).json(tags);
-    }catch(error){
+    } catch (error) {
         next(error);
     }
-}
+};
 
-async function createTag(req, res, next) {
-    try{
+export const createTag = async (req, res, next) => {
+    try {
         const tag = await tagService.createTag(req.body.name);
-         res.status(201).json(tag);
-    }catch(error){
+        res.status(201).json(tag);
+    } catch (error) {
         next(error);
     }
-}
+};
 
-async function updateTag(req, res, next){
-    try{
+export const updateTag = async (req, res, next) => {
+    try {
         const tags = await tagService.updateTag(req.params.id, req.body.name);
         res.status(200).json(tags);
-    }catch(error){
+    } catch (error) {
         next(error);
     }
-}
+};
 
-async function deleteTag(req, res, next){
-    try{
+export const deleteTag = async (req, res, next) => {
+    try {
         const tags = await tagService.deleteTag(req.params.id);
         res.status(200).json(tags);
-    }catch(error){
+    } catch (error) {
         next(error);
     }
-}
-
-module.exports = {getAllTags, createTag, updateTag, deleteTag}
+};

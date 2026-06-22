@@ -1,10 +1,11 @@
-const express = require('express');
-const { protect } = require('../middlewares/auth.middleware');
-const router = express.Router();
-const subController = require('../controllers/subscriber.controller');
+import { Router } from 'express';
+import { getAllSubscribers, createSubscriber, deleteSubscriber } from '../controllers/subscriber.controller.js';
+import { protect } from '../middlewares/auth.middleware.js';
 
-router.post('/', subController.createSubscriber);
-router.get('/', protect, subController.getAllSubscribers);
-router.delete('/:id', protect, subController.deleteSubscriber);
+const router = Router();
 
-module.exports = router;
+router.post('/', createSubscriber);
+router.get('/', protect, getAllSubscribers);
+router.delete('/:id', protect, deleteSubscriber);
+
+export default router;

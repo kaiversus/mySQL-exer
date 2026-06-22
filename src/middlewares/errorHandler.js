@@ -1,8 +1,8 @@
-function HandleError(err, req, res, next) {
+const errorHandler = (err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     res.status(statusCode).json({
         error: err.message || 'Internal Server Error',
     });
-}
+};
 
-module.exports = HandleError;
+export default errorHandler;
