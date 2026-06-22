@@ -12,6 +12,7 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/tags', require('./routes/tag.routes'));
 app.use('/api/subscribers', require('./routes/subscriber.routes'));
 app.use('/api/profile', require('./routes/profile.routes'));
+app.use('/api/admins', require('./routes/admin.routes'));
 app.use(require('./middlewares/errorHandler'));
 
 module.exports = app;
